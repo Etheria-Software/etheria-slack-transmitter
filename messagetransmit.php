@@ -56,7 +56,7 @@ function messagetransmit($url,$messagetitle,$botname,$color,$attfields,$icontype
                         "fields"   => $attfieldarry
                         );
                 $data = 'payload={"channel":"#'.$room.'","username":"'.$botname.'","'.$icontype.'":"'.$icondata.'","attachments":['.json_encode($payloadarry).']}';
-                echo $data;
+                //echo $data;//debug
                 $ch = curl_init();
                 curl_setopt($ch, CURLOPT_URL, $url);
                 curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
