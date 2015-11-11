@@ -46,21 +46,17 @@ please ensure that the service you are sending from tolerates graylisting on tar
 perfectly happy with this)
 This software is provided WITHOUT any SUPPORT or WARRANTY but bug reports and feature requests are welcome.
 */
-
-
 function messagetransmit($url,$messagetitle,$botname,$color,$attfields,$icontype,$icondata,$room){
                 $attfieldarry = json_decode("[".$attfields."]");
                 $payloadarry = array(
-                        "channel"  =>  "#{$room}",
-                        "username" => $botname,
                         "fallback" => $messagetitle,
                         "pretext"  => $messagetitle,
                         "color"    => $color,
-                        $icontype  => $icondata,
+                        "mrkdwn_in" => ["pretext", "text", "fields"],
                         "fields"   => $attfieldarry
                         );
-
-                $data = "payload=" . json_encode($payloadarry);
+                $data = 'payload={"channel":"#'.$room.'","username":"'.$botname.'","'.$icontype.'":"'.$icondata.'","attachments":['.json_encode($payloadarry).']}';
+                echo $data;
                 $ch = curl_init();
                 curl_setopt($ch, CURLOPT_URL, $url);
                 curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
@@ -73,9 +69,7 @@ function messagetransmit($url,$messagetitle,$botname,$color,$attfields,$icontype
                 {
                     echo 'Curl error: ' . curl_error($ch);
                 }
-
                 curl_close($ch);
 }
-
 ?>
 
